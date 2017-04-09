@@ -1,0 +1,200 @@
+﻿<Window x:Class="Winmine.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Winmine" Loaded="Window_Loaded"
+        mc:Ignorable="d" Icon="Winmine.ico" WindowStartupLocation="CenterScreen"
+        Title="扫雷" Height="320" Width="250" ResizeMode="CanResize">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="DarkRed"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="BlueViolet"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="MenuItem">
+            <EventSetter Event="Click" Handler="MenuItem_Click"/>
+            <!--<Setter Property="Background" Value="White"/>-->
+            <Setter Property="Foreground" Value="DarkRed"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border BorderThickness="0.5" BorderBrush="DarkBlue" CornerRadius="1" Name="MenuBorder" Width="70" Background="Transparent" Height="20" VerticalAlignment="Center">
+                            <Grid>
+                                <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top"/>
+                                <Popup IsOpen="{TemplateBinding IsSubmenuOpen}" Placement="Bottom" AllowsTransparency="True">
+                                    <Border Margin="2" Background="White" BorderBrush="DarkBlue" BorderThickness="0.5" Width="70">
+                                        <StackPanel IsItemsHost="True"></StackPanel>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MenuBorder" Property="Background" Value="DarkOrange"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Menu">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <ControlTemplate x:Key="boom">
+            <Border Name="buttonBorder" SnapsToDevicePixels="true" Background="#FF96E6D4" BorderThickness="0.5" BorderBrush="#FF111EEE" CornerRadius="1">
+                <!--<Image Source="images/mine.bmp" Stretch="Fill"/>-->
+                <Image Source="Winmine.ico" Stretch="Fill"/>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="flag">
+            <Border Name="buttonBorder" SnapsToDevicePixels="true" Background="#FF96E6D4" BorderThickness="0.5" BorderBrush="#FF111EEE" CornerRadius="1">
+                <!--<Image Source="images/mine.bmp" Stretch="Fill"/>-->
+                <Image Source="flag.png" Stretch="Fill"/>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ask">
+            <Border Name="buttonBorder" SnapsToDevicePixels="true" Background="#FF96E6D4" BorderThickness="0.5" BorderBrush="#FF111EEE" CornerRadius="1">
+                <TextBlock Foreground="DarkRed" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" FontSize="{TemplateBinding FontSize}" FontWeight="Bold"
+                                       FontFamily="{TemplateBinding FontFamily}" Text="?"></TextBlock>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate TargetType="Button" x:Key="blank">
+            <Border Name="buttonBorder" SnapsToDevicePixels="true" Background="White" BorderThickness="0.5" BorderBrush="#FF111EEE" CornerRadius="1">
+                <TextBlock Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" FontSize="{TemplateBinding FontSize}" FontWeight="Bold"
+                                       FontFamily="{TemplateBinding FontFamily}" Text="{TemplateBinding Content}"></TextBlock>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate TargetType="Button" x:Key="resume">
+            <Border Name="buttonBorder" SnapsToDevicePixels="true" Background="#FF96E6D4" BorderThickness="0.5" BorderBrush="#FF111EEE" CornerRadius="1">
+                <TextBlock Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" FontSize="{TemplateBinding FontSize}" FontWeight="Bold"
+                                       FontFamily="{TemplateBinding FontFamily}" Text="{TemplateBinding Content}"></TextBlock>
+            </Border>
+        </ControlTemplate>
+        <Style TargetType="Button" x:Key="standard">
+            <EventSetter Event="Click" Handler="Button_Click"/>
+            <EventSetter Event="MouseRightButtonDown" Handler="Button_MouseRightButtonDown"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <EventSetter Event="MouseWheel" Handler="Button_MouseWheel"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="buttonBorder" SnapsToDevicePixels="true" Background="#FF96E6D4" BorderThickness="0.5" BorderBrush="#FF111EEE" CornerRadius="1">
+                            <TextBlock Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" FontSize="{TemplateBinding FontSize}" FontWeight="Bold"
+                                       FontFamily="{TemplateBinding FontFamily}" Text="{TemplateBinding Content}"></TextBlock>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <!--<ColorAnimation Storyboard.TargetName="buttonBorder" Storyboard.TargetProperty="Background.Color" Duration="0:0:1"
+                                            To="Beige" AutoReverse="True"></ColorAnimation>-->
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="buttonBorder" Storyboard.TargetProperty="Background.Color">
+                                            <LinearColorKeyFrame Value="GreenYellow" KeyTime="0:0:0.5"/>
+                                            <LinearColorKeyFrame Value="#FF96E6D4" KeyTime="0:0:1"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <!--<EventTrigger RoutedEvent="Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="buttonBorder" Storyboard.TargetProperty="Background.Color" Duration="0:0:0.1"
+                                            To="White">
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>-->
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--<Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Orange"/>
+                </Trigger>
+            </Style.Triggers>-->
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <!--Head Range-->
+        <Grid Name="headGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Menu Focusable="False">
+                <!--<MenuItem Header="文件">
+                    
+                </MenuItem>-->
+                <MenuItem Header="游戏">
+                    <MenuItem Header="开始" Click="MenuItem_Click" Name="start"></MenuItem>
+                    <!--<Separator/>-->
+                    <MenuItem Header="简单" Name="easy" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="一般" Name="soso" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="困难" Name="harder" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="抓狂" Name="super" Click="MenuItem_Click"></MenuItem>
+                </MenuItem>
+                <!--<MenuItem Header="颜色">
+                    
+                </MenuItem>-->
+                <MenuItem Header="重新开始" Name="restart" Click="MenuItem_Click"/>
+                <MenuItem Header="帮助">
+                    <MenuItem Header="关于" Name="about" Click="MenuItem_Click"/>
+                </MenuItem>
+                
+            </Menu>
+        </Grid>
+        <!--Play Range-->
+        <Grid Grid.Row="1" Name="gameGrid">
+        </Grid>
+        <!--Status Range-->
+        <!--<ScrollViewer Grid.Row="2" Focusable="False" HorizontalScrollBarVisibility="Visible">-->
+        <Grid Name="statusGrid" Background="#FFC3E8E1" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <!--<ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>-->
+            </Grid.ColumnDefinitions>
+            <!--<TextBlock Text="游戏状态：" Name="statusTB" Visibility="Collapsed" Grid.Column="6"/>
+                <TextBlock Name="status" Visibility="Collapsed" Grid.Column="7"/>-->
+            <TextBlock Text="分数：" Name="scoreTB"/>
+            <TextBlock Name="score" Text="0" Grid.Column="1"/>
+            <TextBlock Text="时间：" Name="timeTB" Grid.Column="2"/>
+            <TextBlock Name="time" Grid.Column="3" Text="0"/>
+            <TextBlock Text="总雷数：" Grid.Column="4" Name="totalTB"/>
+            <TextBlock Name="total" Grid.Column="5"/>
+            <TextBlock Text="扫雷数：" Name="clearTB" Visibility="Collapsed" Grid.Column="6"/>
+            <TextBlock Name="clear" Visibility="Collapsed" Grid.Column="7"/>
+        </Grid>
+        <!--</ScrollViewer>-->
+    </Grid>
+</Window>

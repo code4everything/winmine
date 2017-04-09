@@ -1,0 +1,15 @@
+D:\Study\VS\Winmine\Winmine\bin\Debug\Winmine.exe.config
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\bin\Debug\Winmine.exe.config
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\bin\Debug\Winmine.exe
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\bin\Debug\Winmine.pdb
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\Winmine.csprojResolveAssemblyReference.cache
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\MainWindow.g.cs
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\App.g.cs
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\Winmine_MarkupCompile.cache
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\Winmine_MarkupCompile.lref
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\MainWindow.baml
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\Winmine.g.resources
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\Winmine.Properties.Resources.resources
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\Winmine.csproj.GenerateResource.Cache
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\Winmine.exe
+D:\Study\VisualStudio\WindwosPresentationFoundation\Winmine\Winmine\obj\Debug\Winmine.pdb
