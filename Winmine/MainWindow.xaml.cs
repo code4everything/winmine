@@ -55,7 +55,7 @@ namespace Winmine
         }
 
         #region Start game
-        public void gameStart()
+        public void GameStart()
         {
             //gridIndexList.Clear();
             //初始化网格
@@ -70,13 +70,6 @@ namespace Winmine
             //添加雷的索引
             index.Clear();
             max = cols * rows;
-            //for (int i = 0; i < rows; i++)
-            //{
-            //    for (int j = 0; j < cols; j++)
-            //    {
-            //        gridIndexList.Add(i * rows + j);
-            //    }
-            //}
             while (true)
             {
                 ind = ran.Next(0, max);
@@ -84,9 +77,6 @@ namespace Winmine
                 {
                     index.Add(ind);
                 }
-                //ind = ran.Next(0, gridIndexList.Count);
-                //index.Add(gridIndexList[ind]);
-                //gridIndexList.RemoveAt(ind);
                 if (index.Count >= hard)
                 {
                     break;
@@ -97,9 +87,11 @@ namespace Winmine
             {
                 for(int j = 0; j < cols; j++)
                 {
-                    b = new Button();
-                    b.Style = this.Resources["standard"] as Style;
-                    b.Tag = "0";
+                    b = new Button
+                    {
+                        Style = this.Resources["standard"] as Style,
+                        Tag = "0"
+                    };
                     if (index.Contains(i * cols + j))
                     {
                         b.Tag = "*";
@@ -134,24 +126,8 @@ namespace Winmine
                         }
                     }
                 }
-                //for (int k = 0; k < max - 1; k++)
-                //{
-                //    for (int i = -1; i < 2; i++)
-                //    {
-                //        for (int j = -1; j < 2; j++)
-                //        {
-                //            if (Grid.GetRow(gameGrid.Children[k]) == (x + i) && Grid.GetColumn(gameGrid.Children[k]) == (y + j))
-                //            {
-                //                if ((gameGrid.Children[k] as Button).Tag.ToString() == "*")
-                //                {
-                //                    number++;
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
                 b.Tag = number == 0 ? " " : number.ToString();
-                foreground();
+                Foreground();
             }
             //初始化数据
             doubleTime = 0;
@@ -185,8 +161,6 @@ namespace Winmine
                 this.Height = 320;
                 rows = 10;
                 cols = 10;
-                //clear.Visibility = Visibility.Collapsed;
-                //clearTB.Visibility = Visibility.Collapsed;
             }
             else if (mi.Name == "soso")
             {
@@ -322,7 +296,7 @@ namespace Winmine
                     }
                 }
                 b.Tag = number == 0 ? " " : number.ToString();
-                foreground();
+                Foreground();
             }
             this.Title = "扫雷";
             loadGame.IsEnabled = false;
@@ -336,10 +310,7 @@ namespace Winmine
             {
                 intClear = 0;
                 this.Title = "扫雷   ------------------数据加载中----------------------------------------------------------";
-                gameStart();
-                //loadGame.IsEnabled = true;
-                //this.Title = "扫雷   -------------数据加载中（计算每个方块的数值）------------------------------------------------------";
-                //loadGame.Start();
+                GameStart();
                 this.Title = "扫雷";
                 startBool = false;
             }
@@ -355,7 +326,7 @@ namespace Winmine
                         isEnd++;
                         if(b.Tag.ToString()==" ")
                         {
-                            calcuteSpread(b);
+                            CalcuteSpread(b);
                         }
                     }
                 }
@@ -381,7 +352,7 @@ namespace Winmine
         #endregion
 
         #region Calcute Spread
-        public void calcuteSpread(Button cb)
+        public void CalcuteSpread(Button cb)
         {
             x = Grid.GetRow(cb);
             y = Grid.GetColumn(cb);
@@ -404,7 +375,7 @@ namespace Winmine
                             if (b.Tag.ToString() != " " && b.Tag.ToString()!="*")
                             {
                                 intScore+=(hard/10);
-                                foreground();
+                                Foreground();
                                 b.Content = b.Tag.ToString();
                             }
                         }
@@ -415,7 +386,7 @@ namespace Winmine
         #endregion
 
         #region Foreground Color
-        public void foreground()
+        public new void Foreground()
         {
             //添加前景颜色
             try
