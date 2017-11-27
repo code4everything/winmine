@@ -31,11 +31,11 @@ namespace Winmine
         Random ran = new Random();              //产生雷的随机索引
         int ind;                                //接引产生的随机索引
         int max;                              //最大索引值
-        int x,y;                               //被点按钮的索引
+        int x, y;                               //被点按钮的索引
         int tag;                             //标签的值
         MenuItem mi;                        //菜单
         DispatcherTimer dt = new DispatcherTimer();
-        bool isCheck=false;                               //是否检查展开完全
+        bool isCheck = false;                               //是否检查展开完全
         int hasBlank;                                   //是否还有空白的按钮
         double doubleTime;                                    //时间
         int intScore;                                   //分数
@@ -45,7 +45,7 @@ namespace Winmine
         List<int> ri = new List<int>();                 //右键按钮需要执行的操作
         int isEnd;                                      //检测游戏是否胜利结束
         bool startBool = false;                             //是否开始游戏
-        DispatcherTimer loadGame=new DispatcherTimer();
+        DispatcherTimer loadGame = new DispatcherTimer();
         List<Button> mb = new List<Button>();           //提示过的按钮
         //List<int> gridIndexList = new List<int>();
 
@@ -83,9 +83,9 @@ namespace Winmine
                 }
             }
             //初始化游戏
-            for(int i = 0; i < rows; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for(int j = 0; j < cols; j++)
+                for (int j = 0; j < cols; j++)
                 {
                     b = new Button
                     {
@@ -113,13 +113,13 @@ namespace Winmine
                 x = Grid.GetRow(b);
                 y = Grid.GetColumn(b);
                 number = 0;
-                for(int i = -1; i < 2; i++)
+                for (int i = -1; i < 2; i++)
                 {
-                    for(int j = -1; j < 2; j++)
+                    for (int j = -1; j < 2; j++)
                     {
-                        if(x+i>-1 && y+j>-1 && x+i<rows && y + j < cols)
+                        if (x + i > -1 && y + j > -1 && x + i < rows && y + j < cols)
                         {
-                            if((gameGrid.Children[z+i*cols+j] as Button).Tag.ToString() == "*")
+                            if ((gameGrid.Children[z + i * cols + j] as Button).Tag.ToString() == "*")
                             {
                                 number++;
                             }
@@ -145,7 +145,7 @@ namespace Winmine
             mi = sender as MenuItem;
             if (mi.Name == "about")
             {
-                MessageBox.Show("作者：潘滔（Pantao）\r\nQQ：735817834\r\n\r\nPS：\r\n  （1）程序有任何BUG或者界面显示问题请及时提出，方便作者改进。\r\n  （2）有好的建议也强烈建议加QQ提出。\r\n\r\n注意：版权归作者所有，侵权必究。", "作者资料",MessageBoxButton.OK,MessageBoxImage.Information);
+                MessageBox.Show("作者：潘滔（Pantao）\r\nQQ：735817834\r\n\r\nPS：\r\n  （1）程序有任何BUG或者界面显示问题请及时提出，方便作者改进。\r\n  （2）有好的建议也强烈建议加QQ提出。\r\n\r\n注意：版权归作者所有，侵权必究。", "作者资料", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             dt.IsEnabled = false;
@@ -167,7 +167,7 @@ namespace Winmine
                 //50p400
                 hard = 50;
                 this.Width = 500;
-                this.Height=560;
+                this.Height = 560;
                 rows = 20;
                 cols = 20;
                 this.Top = 100;
@@ -226,7 +226,7 @@ namespace Winmine
             if (b.Tag.ToString() == "*")
             {
                 //游戏结束
-                for(int i = 0; i < max; i++)
+                for (int i = 0; i < max; i++)
                 {
                     b = gameGrid.Children[i] as Button;
                     if (b.Tag.ToString() == "*")
@@ -248,7 +248,7 @@ namespace Winmine
             //展开
             isCheck = true;
             b.IsEnabled = false;
-            intScore+=(hard/10);
+            intScore += (hard / 10);
             e.Handled = true;
         }
         #endregion
@@ -318,13 +318,13 @@ namespace Winmine
             {
                 hasBlank = 0;
                 isEnd = 0;
-                for(int z = 0; z < max; z++)
+                for (int z = 0; z < max; z++)
                 {
                     b = gameGrid.Children[z] as Button;
                     if (b.IsEnabled == false)
                     {
                         isEnd++;
-                        if(b.Tag.ToString()==" ")
+                        if (b.Tag.ToString() == " ")
                         {
                             CalcuteSpread(b);
                         }
@@ -333,7 +333,7 @@ namespace Winmine
                 if (isEnd >= (max - hard))
                 {
                     MessageBox.Show("不错哦，赢了，再来一局吧", "厉害了", MessageBoxButton.OK, MessageBoxImage.Information);
-                    for(int z = 0; z < max; z++)
+                    for (int z = 0; z < max; z++)
                     {
                         (gameGrid.Children[z] as Button).IsEnabled = false;
                     }
@@ -344,8 +344,8 @@ namespace Winmine
                     isCheck = false;
                 }
             }
-            doubleTime+=dt.Interval.TotalMilliseconds;
-            time.Text = (doubleTime/100).ToString("#0.00");
+            doubleTime += dt.Interval.TotalMilliseconds;
+            time.Text = (doubleTime / 100).ToString("#0.00");
             score.Text = intScore + "分  ";
             clear.Text = intClear + "个  ";
         }
@@ -372,9 +372,9 @@ namespace Winmine
                             hasBlank--;
                             b.IsEnabled = false;
                             b.Template = this.Resources["blank"] as ControlTemplate;
-                            if (b.Tag.ToString() != " " && b.Tag.ToString()!="*")
+                            if (b.Tag.ToString() != " " && b.Tag.ToString() != "*")
                             {
-                                intScore+=(hard/10);
+                                intScore += (hard / 10);
                                 Foreground();
                                 b.Content = b.Tag.ToString();
                             }
@@ -452,7 +452,7 @@ namespace Winmine
                 b.Template = this.Resources["flag"] as ControlTemplate;
                 intClear++;
             }
-            else if(right%3==1)
+            else if (right % 3 == 1)
             {
                 b.Template = this.Resources["ask"] as ControlTemplate;
                 intClear--;
@@ -478,7 +478,7 @@ namespace Winmine
                 b.Content = b.Tag.ToString();
                 e.Handled = true;
             }
-            
+
         }
         #endregion
     }
